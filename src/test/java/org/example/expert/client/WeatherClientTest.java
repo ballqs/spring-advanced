@@ -62,9 +62,29 @@ public class WeatherClientTest {
     }
 
     @Test
-    public void getTodayWeather_날씨_데이터_없음() {
+    public void getTodayWeather_날씨_데이터_없음1() {
         // given
         ResponseEntity<WeatherDto[]> responseEntity = new ResponseEntity<>(new WeatherDto[]{}, HttpStatus.OK);
+
+        given(restTemplate.getForEntity(
+                UriComponentsBuilder
+                        .fromUriString("https://f-api.github.io/f-api/weather.json")  // 절대 URI로 수정
+                        .encode()
+                        .build()
+                        .toUri(), WeatherDto[].class))
+                .willReturn(responseEntity);
+
+        // when
+        ServerException exception = assertThrows(ServerException.class, () -> weatherClient.getTodayWeather());
+
+        // then
+        assertEquals("날씨 데이터가 없습니다." , exception.getMessage());
+    }
+
+    @Test
+    public void getTodayWeather_날씨_데이터_없음2() {
+        // given
+        ResponseEntity<WeatherDto[]> responseEntity = new ResponseEntity<>(null, HttpStatus.OK);
 
         given(restTemplate.getForEntity(
                 UriComponentsBuilder

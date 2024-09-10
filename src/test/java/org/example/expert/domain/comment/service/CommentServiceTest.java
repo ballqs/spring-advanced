@@ -7,13 +7,10 @@ import org.example.expert.domain.comment.entity.Comment;
 import org.example.expert.domain.comment.repository.CommentRepository;
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.common.exception.InvalidRequestException;
-import org.example.expert.domain.common.exception.ServerException;
-import org.example.expert.domain.todo.dto.response.TodoSaveResponse;
 import org.example.expert.domain.todo.entity.Todo;
 import org.example.expert.domain.todo.repository.TodoRepository;
 import org.example.expert.domain.user.entity.User;
 import org.example.expert.domain.user.enums.UserRole;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -101,7 +98,6 @@ class CommentServiceTest {
     }
 
     @Test
-    @DisplayName("saveComment_save_검증")
     public void saveComment_save_검증() {
         // given
         long todoId = 1;
@@ -132,7 +128,6 @@ class CommentServiceTest {
     }
 
     @Test
-    @DisplayName("getComments_동작_완료")
     public void getComments_동작_완료() {
         // given
         AuthUser authUser = new AuthUser(1L , "test@test.com" , UserRole.ADMIN);

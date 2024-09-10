@@ -11,7 +11,6 @@ import org.example.expert.domain.common.exception.InvalidRequestException;
 import org.example.expert.domain.user.entity.User;
 import org.example.expert.domain.user.enums.UserRole;
 import org.example.expert.domain.user.repository.UserRepository;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,11 +20,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.ArgumentMatchers.any;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -41,7 +40,6 @@ public class AuthServiceTest {
     private AuthService authService;
 
     @Test
-    @DisplayName("signup_이메일_없음")
     public void signup_이메일_없음() {
         // given
         SignupRequest signupRequest = new SignupRequest(null , "1234" , "ADMIN");
@@ -54,7 +52,6 @@ public class AuthServiceTest {
     }
 
     @Test
-    @DisplayName("signup_이메일_중복_검증")
     public void signup_이메일_중복_검증() {
         // given
         SignupRequest signupRequest = new SignupRequest("test@test.com" , "1234" , "ADMIN");
@@ -68,7 +65,6 @@ public class AuthServiceTest {
     }
 
     @Test
-    @DisplayName("signup_get_token")
     public void signup_get_token() {
         // given
         SignupRequest signupRequest = new SignupRequest("test@test.com" , "1234" , "ADMIN");
@@ -96,7 +92,6 @@ public class AuthServiceTest {
     }
 
     @Test
-    @DisplayName("signin_가입_유저_검증")
     public void signin_가입_유저_검증() {
         // given
         SigninRequest signinRequest = new SigninRequest("test@test.com" , "1234");
@@ -110,7 +105,6 @@ public class AuthServiceTest {
     }
 
     @Test
-    @DisplayName("signin_비밀번호_검증")
     public void signin_비밀번호_검증() {
         // given
         SigninRequest signinRequest = new SigninRequest("test@test.com" , "1234");
@@ -125,7 +119,6 @@ public class AuthServiceTest {
     }
 
     @Test
-    @DisplayName("signin_동작_완료")
     public void signin_동작_완료() {
         // given
         SigninRequest signinRequest = new SigninRequest("test@test.com" , "1234");

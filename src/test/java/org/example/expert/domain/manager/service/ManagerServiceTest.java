@@ -12,7 +12,6 @@ import org.example.expert.domain.todo.repository.TodoRepository;
 import org.example.expert.domain.user.entity.User;
 import org.example.expert.domain.user.enums.UserRole;
 import org.example.expert.domain.user.repository.UserRepository;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -127,7 +126,6 @@ class ManagerServiceTest {
     }
 
     @Test
-    @DisplayName("saveManager_Todo_없음")
     public void saveManager_Todo_없음() {
         // given
         AuthUser authUser = new AuthUser(1L , "test@test.com" , UserRole.ADMIN);
@@ -144,7 +142,6 @@ class ManagerServiceTest {
     }
 
     @Test
-    @DisplayName("saveManager_등록담당자_없음")
     public void saveManager_등록담당자_없음() {
         // given
         AuthUser authUser = new AuthUser(1L , "test@test.com" , UserRole.ADMIN);
@@ -167,7 +164,6 @@ class ManagerServiceTest {
     }
 
     @Test
-    @DisplayName("saveManager_일정_작성자_본인_불가")
     public void saveManager_일정_작성자_본인_불가() {
         // given
         AuthUser authUser = new AuthUser(1L , "test@test.com" , UserRole.ADMIN);
@@ -190,7 +186,6 @@ class ManagerServiceTest {
     }
 
     @Test
-    @DisplayName("saveManager_정상적으로_동작")
     public void saveManager_정상적으로_동작() {
         // given
         AuthUser authUser = new AuthUser(1L , "test@test.com" , UserRole.ADMIN);
@@ -221,7 +216,6 @@ class ManagerServiceTest {
     }
 
     @Test
-    @DisplayName("deleteManager_Todo_없음")
     public void deleteManager_Todo_없음() {
         // given
         AuthUser authUser = new AuthUser(1L , "test@test.com" , UserRole.ADMIN);
@@ -239,7 +233,6 @@ class ManagerServiceTest {
     }
 
     @Test
-    @DisplayName("deleteManager_일정을_만든_유저_유효성_검증")
     public void deleteManager_일정을_만든_유저_유효성_검증() {
         // given
         AuthUser authUser = new AuthUser(1L , "test@test.com" , UserRole.ADMIN);
@@ -260,7 +253,6 @@ class ManagerServiceTest {
     }
 
     @Test
-    @DisplayName("deleteManager_담당자_없음")
     public void deleteManager_담당자_없음() {
         // given
         AuthUser authUser = new AuthUser(1L , "test@test.com" , UserRole.ADMIN);
@@ -283,7 +275,6 @@ class ManagerServiceTest {
     }
 
     @Test
-    @DisplayName("deleteManager_일정_담당자_검증")
     public void deleteManager_일정_담당자_검증() {
         // given
         AuthUser authUser = new AuthUser(1L , "test@test.com" , UserRole.ADMIN);
@@ -310,7 +301,6 @@ class ManagerServiceTest {
     }
 
     @Test
-    @DisplayName("deleteManager_삭제_검증")
     public void deleteManager_삭제_검증() {
         // given
         AuthUser authUser = new AuthUser(1L , "test@test.com" , UserRole.ADMIN);

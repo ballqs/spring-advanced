@@ -10,7 +10,6 @@ import org.example.expert.domain.todo.entity.Todo;
 import org.example.expert.domain.todo.repository.TodoRepository;
 import org.example.expert.domain.user.entity.User;
 import org.example.expert.domain.user.enums.UserRole;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -41,7 +40,6 @@ public class TodoServiceTest {
     private WeatherClient weatherClient;
 
     @Test
-    @DisplayName("saveTodo_동작_완료")
     public void saveTodo_동작_완료() {
         // given
         AuthUser authUser = new AuthUser(1L , "test@test.com" , UserRole.ADMIN);
@@ -71,7 +69,6 @@ public class TodoServiceTest {
     }
 
     @Test
-    @DisplayName("getTodos_조회데이터_검증하기")
     public void getTodos_조회데이터_검증하기() {
         // given
         int page = 1;
@@ -99,7 +96,6 @@ public class TodoServiceTest {
     }
 
     @Test
-    @DisplayName("getTodo_Todo_없음")
     public void getTodo_Todo_없음() {
         // given
         long todoId = 1L;
@@ -113,7 +109,6 @@ public class TodoServiceTest {
     }
 
     @Test
-    @DisplayName("getTodo_조회데이터_검증하기")
     public void getTodo_조회데이터_검증하기() {
         // given
         long todoId = 1L;

@@ -1,7 +1,6 @@
 package org.example.expert.domain.comment.service;
 
 import org.example.expert.domain.comment.repository.CommentRepository;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -21,7 +20,6 @@ public class CommentAdminServiceTest {
     private CommentAdminService commentAdminService;
 
     @Test
-    @DisplayName("deleteComment_동작_완료")
     public void deleteComment_동작_완료() {
         // given
         long commentId = 1L;

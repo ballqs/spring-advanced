@@ -8,7 +8,6 @@ import org.example.expert.domain.user.dto.response.UserResponse;
 import org.example.expert.domain.user.entity.User;
 import org.example.expert.domain.user.enums.UserRole;
 import org.example.expert.domain.user.repository.UserRepository;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,8 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
 
 @ExtendWith(MockitoExtension.class)
@@ -36,7 +34,6 @@ public class UserServiceTest {
     private UserService userService;
 
     @Test
-    @DisplayName("getUser_아이디_못찾음")
     public void getUser_아이디_못찾음() {
         // given
         long userId = 1L;
@@ -50,7 +47,6 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("getUser_정보_가져오기")
     public void getUser_정보_가져오기() {
         // given
         long userId = 1L;
@@ -66,7 +62,6 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("changePassword_비밀번호_정규식_검증")
     public void changePassword_비밀번호_정규식_검증() {
         // given
         long userId = 1L;
@@ -80,7 +75,6 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("changePassword_아이디_못찾음")
     public void changePassword_아이디_못찾음() {
         // given
         long userId = 1L;
@@ -95,7 +89,6 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("changePassword_비밀번호_변경_검증")
     public void changePassword_비밀번호_변경_검증() {
         // given
         long userId = 1L;
@@ -111,7 +104,6 @@ public class UserServiceTest {
     }
 
     @Test
-    @DisplayName("changePassword_기존_비밀번호_검증")
     public void changePassword_기존_비밀번호_검증() {
         // given
         long userId = 1L;
@@ -124,6 +116,21 @@ public class UserServiceTest {
 
         // then
         assertEquals("잘못된 비밀번호입니다." , exception.getMessage());
+    }
+
+    @Test
+    public void changePassword_동작_완료() {
+        // given
+        long userId = 1L;
+        User user = new User("test@test.com" , passwordEncoder.encode("Aasd12345") , UserRole.ADMIN);
+        UserChangePasswordRequest userChangePasswordRequest = new UserChangePasswordRequest("Aasd12345" , "Aasd23456");
+        given(userRepository.findById(userId)).willReturn(Optional.of(user));
+
+        // when
+        userService.changePassword(userId , userChangePasswordRequest);
+
+        // then
+        assertTrue(passwordEncoder.matches("Aasd23456",passwordEncoder.encode("Aasd23456")));
     }
 
 }
