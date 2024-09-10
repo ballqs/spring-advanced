@@ -86,7 +86,7 @@ public class TodoServiceTest {
         );
         // ※page 에 담기
         Page<Todo> todosPage = new PageImpl<>(todoList, pageable, todoList.size());
-        given(todoRepository.findAllByOrderByModifiedAtDesc(pageable)).willReturn(todosPage);
+        given(todoRepository.findAllByOrderByModifiedAtDesc(any())).willReturn(todosPage);
 
         // when
         Page<TodoResponse> result = todoService.getTodos(page, size);
