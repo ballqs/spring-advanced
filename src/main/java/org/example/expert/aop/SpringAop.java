@@ -29,15 +29,16 @@ public class SpringAop {
     private final JwtUtil jwtUtil;
 
     @Pointcut("execution(* org.example.expert.domain.comment.controller.CommentAdminController.deleteComment(..))")
-    private void checkController1() {}
+    private void checkDeleteComment() {}
 
     @Pointcut("execution(* org.example.expert.domain.user.controller.UserAdminController.changeUserRole(..))")
-    private void checkController2() {}
+    private void checkChangeUserRole() {}
 
-    @Around("checkController1() || checkController2()")
+    @Around("checkDeleteComment() || checkChangeUserRole()")
     public Object check(ProceedingJoinPoint joinPoint) throws Throwable {
         LocalDateTime dt = LocalDateTime.now();
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        // request.getAttribute("userId")로도 처리 가능
         String token = request.getHeader(HttpHeaders.AUTHORIZATION);
         Claims claims = jwtUtil.extractClaims(token);
 
