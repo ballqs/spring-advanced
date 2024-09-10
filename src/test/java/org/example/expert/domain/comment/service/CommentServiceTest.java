@@ -79,6 +79,28 @@ class CommentServiceTest {
     }
 
     @Test
+    public void saveComment_할일에_해당하는_담당자가_아니면_댓글_작성불가() {
+        // given
+        long todoId = 1;
+        CommentSaveRequest request = new CommentSaveRequest("contents");
+
+        AuthUser authUser1 = new AuthUser(1L, "email", UserRole.USER);
+
+        AuthUser authUser2 = new AuthUser(2L, "email", UserRole.USER);
+        User user2 = User.fromAuthUser(authUser2);
+        Todo todo = new Todo("제목", "내용", "날씨", user2);
+        ReflectionTestUtils.setField(todo , "id" , todoId);
+
+        given(todoRepository.findById(anyLong())).willReturn(Optional.of(todo));
+
+        // when
+        InvalidRequestException exception = assertThrows(InvalidRequestException.class, () -> commentService.saveComment(authUser1, todoId, request));
+
+        // then
+        assertEquals("할일에 해당하는 담당자가 아니면 댓글을 달 수 없습니다." , exception.getMessage());
+    }
+
+    @Test
     @DisplayName("saveComment_save_검증")
     public void saveComment_save_검증() {
         // given

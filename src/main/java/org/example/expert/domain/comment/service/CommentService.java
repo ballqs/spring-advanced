@@ -1,6 +1,7 @@
 package org.example.expert.domain.comment.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.expert.domain.comment.dto.request.CommentSaveRequest;
 import org.example.expert.domain.comment.dto.response.CommentResponse;
 import org.example.expert.domain.comment.dto.response.CommentSaveResponse;
@@ -14,10 +15,12 @@ import org.example.expert.domain.user.dto.response.UserResponse;
 import org.example.expert.domain.user.entity.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -31,6 +34,10 @@ public class CommentService {
         User user = User.fromAuthUser(authUser);
         Todo todo = todoRepository.findById(todoId).orElseThrow(() ->
                 new InvalidRequestException("Todo not found"));
+
+        if (!ObjectUtils.nullSafeEquals(user.getId() , todo.getUser().getId())) {
+            throw new InvalidRequestException("할일에 해당하는 담당자가 아니면 댓글을 달 수 없습니다.");
+        }
 
         Comment newComment = new Comment(
                 commentSaveRequest.getContents(),
