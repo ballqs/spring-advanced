@@ -24,9 +24,9 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class ManagerServiceTest {
@@ -132,7 +132,7 @@ class ManagerServiceTest {
         long todoId = 1L;
         ManagerSaveRequest managerSaveRequest = new ManagerSaveRequest(1L);
 
-        given(todoRepository.findById(todoId)).willReturn(Optional.empty());
+        given(todoRepository.findById(anyLong())).willReturn(Optional.empty());
 
         // when
         InvalidRequestException exception = assertThrows(InvalidRequestException.class, () -> managerService.saveManager(authUser , todoId , managerSaveRequest));
@@ -145,16 +145,15 @@ class ManagerServiceTest {
     public void saveManager_등록담당자_없음() {
         // given
         AuthUser authUser = new AuthUser(1L , "test@test.com" , UserRole.ADMIN);
-        User user = User.fromAuthUser(authUser);
-
         long todoId = 1L;
+        ManagerSaveRequest managerSaveRequest = new ManagerSaveRequest(1L);
+
+        User user = User.fromAuthUser(authUser);
         Todo todo = new Todo("제목", "내용", "날씨", user);
         ReflectionTestUtils.setField(todo, "id", todoId);
 
-        ManagerSaveRequest managerSaveRequest = new ManagerSaveRequest(1L);
-
-        given(todoRepository.findById(todoId)).willReturn(Optional.of(todo));
-        given(userRepository.findById(managerSaveRequest.getManagerUserId())).willReturn(Optional.empty());
+        given(todoRepository.findById(anyLong())).willReturn(Optional.of(todo));
+        given(userRepository.findById(anyLong())).willReturn(Optional.empty());
 
         // when
         InvalidRequestException exception = assertThrows(InvalidRequestException.class, () -> managerService.saveManager(authUser , todoId , managerSaveRequest));
@@ -167,16 +166,16 @@ class ManagerServiceTest {
     public void saveManager_일정_작성자_본인_불가() {
         // given
         AuthUser authUser = new AuthUser(1L , "test@test.com" , UserRole.ADMIN);
-        User user = User.fromAuthUser(authUser);
-
         long todoId = 1L;
+        ManagerSaveRequest managerSaveRequest = new ManagerSaveRequest(1L);
+
+        User user = User.fromAuthUser(authUser);
         Todo todo = new Todo("제목", "내용", "날씨", user);
         ReflectionTestUtils.setField(todo, "id", todoId);
 
-        ManagerSaveRequest managerSaveRequest = new ManagerSaveRequest(1L);
 
-        given(todoRepository.findById(todoId)).willReturn(Optional.of(todo));
-        given(userRepository.findById(managerSaveRequest.getManagerUserId())).willReturn(Optional.of(user));
+        given(todoRepository.findById(anyLong())).willReturn(Optional.of(todo));
+        given(userRepository.findById(anyLong())).willReturn(Optional.of(user));
 
         // when
         InvalidRequestException exception = assertThrows(InvalidRequestException.class, () -> managerService.saveManager(authUser , todoId , managerSaveRequest));
@@ -202,8 +201,8 @@ class ManagerServiceTest {
 
         Manager newManagerUser = new Manager(managerUser, todo);
 
-        given(todoRepository.findById(todoId)).willReturn(Optional.of(todo));
-        given(userRepository.findById(managerSaveRequest.getManagerUserId())).willReturn(Optional.of(managerUser));
+        given(todoRepository.findById(anyLong())).willReturn(Optional.of(todo));
+        given(userRepository.findById(anyLong())).willReturn(Optional.of(managerUser));
         given(managerRepository.save(any(Manager.class))).willReturn(newManagerUser);
 
         // when
