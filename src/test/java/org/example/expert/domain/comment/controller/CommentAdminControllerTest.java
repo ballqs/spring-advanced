@@ -2,6 +2,7 @@ package org.example.expert.domain.comment.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.expert.TestCommonData;
 import org.example.expert.config.FilterConfig;
 import org.example.expert.config.JwtUtil;
 import org.example.expert.domain.comment.service.CommentAdminService;
@@ -46,7 +47,8 @@ public class CommentAdminControllerTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        this.token = jwtUtil.createToken(1L , "test@test.com" , UserRole.ADMIN);
+        TestCommonData.initToken(jwtUtil);
+        this.token = TestCommonData.TOKEN;
     }
 
     @Test

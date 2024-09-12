@@ -1,6 +1,7 @@
 package org.example.expert.domain.comment.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.expert.TestCommonData;
 import org.example.expert.config.AuthUserArgumentResolver;
 import org.example.expert.config.JwtUtil;
 import org.example.expert.domain.comment.dto.request.CommentSaveRequest;
@@ -66,8 +67,9 @@ public class CommentControllerTest {
         mvc = MockMvcBuilders.standaloneSetup(commentController)
                 .setCustomArgumentResolvers(authUserArgumentResolver).build();
 
-        this.authUser = new AuthUser(1L , "test@test.com" , UserRole.ADMIN);
-        this.token = jwtUtil.createToken(1L , "test@test.com" , UserRole.ADMIN);
+        TestCommonData.initToken(jwtUtil);
+        this.authUser = TestCommonData.AUTH_USER;
+        this.token = TestCommonData.TOKEN;
     }
 
     @Test
